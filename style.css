@@ -1,60 +1,137 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0f111a;
-    color: #f0f0f0;
+    background-color: #0a0f1f;
+    color: #c0dfff;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 50px auto;
-    text-align: center;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 2.5em;
-    color: #00ffcc;
+    font-size: 3em;
+    color: #00cfff;
     margin-bottom: 10px;
     font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px #00cfff, 0 0 20px #00cfff;
+    text-align: center;
 }
 
 p {
-    font-size: 1.1em;
-    margin-bottom: 30px;
-    color: #a0a0a0;
-}
-
-.file-browser {
-    background: #1a1c2b;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #00ffcc33;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin: 15px 0;
     font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #a0cfff;
+    text-align: center;
+}
+
+/* Flex layout */
+.flex-container {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-a {
-    color: #00ffcc;
-    text-decoration: none;
-    transition: color 0.3s;
+/* Drive iframe */
+iframe.drive-embed {
+    flex: 2;
+    min-width: 500px;
+    height: 600px;
+    border: 3px solid #00cfff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00cfff44;
+    background-color: #0a0f1f;
+    transition: all 0.3s ease;
 }
 
-a:hover {
-    color: #ffcc00;
+iframe.drive-embed:hover {
+    box-shadow: 0 0 40px #00ffff88;
+    transform: scale(1.01);
 }
 
-.file-icon {
-    font-size: 1.5em;
+/* Notes board */
+.notes-board {
+    flex: 1;
+    min-width: 300px;
+    transition: all 0.3s ease;
+}
+
+.notes-board:hover {
+    box-shadow: 0 0 30px #00ffff55;
+    transform: scale(1.01);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* Form inside notes board */
+#note-form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#note-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #00cfff;
+    outline: none;
+    margin-right: 10px;
+    background-color: #1a1f33;
+    color: #c0dfff;
+    transition: all 0.3s ease;
+}
+
+#note-input:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 10px #00cfff55;
+}
+
+#note-form button {
+    padding: 10px 15px;
+    background-color: #00cfff;
+    color: #0a0f1f;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#note-form button:hover {
+    background-color: #00ffff;
+    transform: scale(1.05);
+}
+
+#notes-list {
+    list-style: none;
+    padding: 0;
+    max-height: 580px;
+    overflow-y: auto;
+}
+
+#notes-list li {
+    background-color: #1a1f33;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    text-align: left;
+    color: #c0dfff;
+    transition: all 0.2s ease;
+}
+
+#notes-list li:hover {
+    background-color: #1f2544;
+}
+
+/* Scrollbar styling */
+#notes-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#notes-list::-webkit-scrollbar-thumb {
+    background-color: #00cfff55;
+    border-radius: 4px;
 }

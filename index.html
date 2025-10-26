@@ -11,13 +11,93 @@
     <h1>BD Colony Drive</h1>
     <p>Though we’ve graduated, we stay connected—sharing memories, files, and moments that keep our brotherhood alive.</p>
     
-    <div class="file-browser">
-        <ul id="file-list">
-            <li><span class="file-icon">📄</span><a href="files/example1.pdf" target="_blank">example1.pdf</a></li>
-            <li><span class="file-icon">📸</span><a href="files/photo.png" target="_blank">photo.png</a></li>
-            <li><span class="file-icon">📂</span><a href="files/document.docx" target="_blank">document.docx</a></li>
-        </ul>
+    <div class="flex-container">
+        <!-- ============================
+             Google Drive Embed
+             ============================ -->
+        <iframe class="drive-embed"
+            src="https://drive.google.com/embeddedfolderview?id=1A2_CeiqI4ZsCJ8lthkV5pk66OBvjCje7#grid" 
+            frameborder="0">
+        </iframe>
+
+        <!-- ============================
+             Firebase Notes Board
+             ============================ -->
+        <div class="notes-board">
+            <h2>BD Colony Notes</h2>
+            <form id="note-form">
+                <input type="text" id="note-input" placeholder="Write a note..." required>
+                <button type="submit">Post</button>
+            </form>
+            <ul id="notes-list"></ul>
+        </div>
     </div>
 </div>
+
+<!-- ============================
+     Firebase SDKs
+     ============================ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // ============================
+  // ADD YOUR FIREBASE CONFIG HERE
+  // ============================
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC3xwZw0ay7lemZw7WV2mjeavTZM9YzFq0",
+  authDomain: "bd-colony-chat.firebaseapp.com",
+  projectId: "bd-colony-chat",
+  storageBucket: "bd-colony-chat.firebasestorage.app",
+  messagingSenderId: "565290572805",
+  appId: "1:565290572805:web:610051f7d886bbe632106c",
+  measurementId: "G-X6KYSG1HDX"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+  // ============================
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Elements
+  const notesList = document.getElementById('notes-list');
+  const noteForm = document.getElementById('note-form');
+  const noteInput = document.getElementById('note-input');
+
+  // Submit note
+  noteForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (noteInput.value.trim() !== "") {
+      db.collection("notes").add({
+        text: noteInput.value,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      noteInput.value = '';
+    }
+  });
+
+  // Real-time listener
+  db.collection("notes").orderBy("timestamp")
+    .onSnapshot((snapshot) => {
+      notesList.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const li = document.createElement('li');
+        li.textContent = doc.data().text;
+        notesList.appendChild(li);
+      });
+    });
+</script>
 </body>
 </html>
